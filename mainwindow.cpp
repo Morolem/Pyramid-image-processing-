@@ -48,7 +48,7 @@ void MainWindow::insert_images_into_combobox()
 {
     ui->comboBox->clear();
     combobox_quick_sort(0,images.size()-1);
-    for(int i=0; i<images.size(); i++){
+    for(uint i=0; i<images.size(); i++){
         ui->comboBox->addItem(images[i].fileName);
     }
 }
@@ -106,6 +106,7 @@ void MainWindow::on_comboBox_activated(int index)
 
 void MainWindow::on_doubleSpinBox_valueChanged(double arg1)
 {
+    if(!images.empty()){
     auto index = ui->comboBox->currentIndex();
     auto width = images[index].imageData.width() / pow(2,arg1); // уменьшаем ширину в 2^(уровень пирамиды)
     auto height = images[index].imageData.height() / pow(2,arg1); // также уменьшаем высоту
@@ -135,12 +136,13 @@ void MainWindow::on_doubleSpinBox_valueChanged(double arg1)
         height = images[index].imageData.height(); // высота
         img = img.scaled(width,height,Qt::KeepAspectRatio); // растягиваем изображение до размера оригинала
         ui->label->setPixmap(QPixmap::fromImage(img)); // выводим
-
+        }
     }
 }
 
 void MainWindow::on_pushButton_3_clicked()
 {
+    if(!images.empty()){
     image_to_fit_window = true;
     auto index = ui->comboBox->currentIndex(); // получаем индекс выбраного изображения
     auto width = ui->scrollArea->width(); // ширина окна
@@ -149,14 +151,17 @@ void MainWindow::on_pushButton_3_clicked()
     ui->label->setPixmap(QPixmap::fromImage(img)); // выводим
     ui->doubleSpinBox->setValue(0.00);
     ui->label_2->setText(QString::number(int(width)) + 'x' + QString::number(int(height))); // вывод разрешения
+    }
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
+    if(!images.empty()){
     image_to_fit_window = false;
     auto width = images[ui->comboBox->currentIndex()].imageData.width();
     auto height = images[ui->comboBox->currentIndex()].imageData.height();
     ui->label_2->setText(QString::number(int(width)) + 'x' + QString::number(int(height))); // вывод разрешения
     ui->label->setPixmap(QPixmap::fromImage(images[ui->comboBox->currentIndex()].imageData));
     ui->doubleSpinBox->setValue(0.00);
+    }
 }

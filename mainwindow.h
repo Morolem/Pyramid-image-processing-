@@ -25,6 +25,7 @@ private :
     QString path = "/home";
     bool image_to_fit_window = false;
 
+
     /// возвращает индекс вектора images, для найденного имени
     int find_by_name(const QString &);
 
