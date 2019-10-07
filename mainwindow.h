@@ -22,7 +22,7 @@ private :
         QImage imageData;
     };
     std::vector<Images> images;
-    QString path = "/home";
+    QString path = "C:\\";
     bool image_to_fit_window = false;
 
 
